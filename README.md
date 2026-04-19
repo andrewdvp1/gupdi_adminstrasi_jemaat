@@ -172,8 +172,11 @@ administrasi-gupdi/
 
 Pastikan sudah terinstall:
 - PHP >= 8.3
+    https://downloads.php.net/~windows/releases/archives/php-8.5.0-Win32-vs17-x64.zip
 - Composer
+    https://getcomposer.org/download/
 - Node.js >= 18 & npm
+    https://nodejs.org/en/download/current
 - SQLite (sudah tersedia di PHP secara default)
 
 ### Langkah Instalasi
