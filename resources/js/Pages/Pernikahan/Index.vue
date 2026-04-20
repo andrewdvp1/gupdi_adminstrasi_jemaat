@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
     data: Array,
@@ -15,6 +15,9 @@ const tahunFilter = ref(props.tahun);
 function filterTahun() {
     router.get(route('pernikahan.index'), { tahun: tahunFilter.value }, { preserveState: true });
 }
+
+const exportExcelUrl = computed(() => `/export/pernikahan/excel?tahun=${tahunFilter.value}`);
+const exportPdfUrl = computed(() => `/export/pernikahan/pdf?tahun=${tahunFilter.value}`);
 
 function hapus(id) {
     if (confirm('Yakin ingin menghapus data ini?')) {
@@ -40,6 +43,12 @@ function hapus(id) {
                 <Link :href="route('pernikahan.create')" class="bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
                     + Tambah Data
                 </Link>
+                <a :href="exportExcelUrl" class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                    Export Excel
+                </a>
+                <a :href="exportPdfUrl" class="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                    Export PDF
+                </a>
             </div>
 
             <div v-if="page.props.flash?.success" class="mx-4 mt-4 bg-green-50 text-green-700 text-sm px-4 py-2 rounded-lg border border-green-200">
