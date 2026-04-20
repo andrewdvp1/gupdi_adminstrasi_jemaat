@@ -77,9 +77,10 @@ class DataBaptisController extends Controller
         return redirect()->route('baptis.index')->with('success', 'Data baptis berhasil diperbarui.');
     }
 
-    public function destroy(DataBaptis $baptis)
+    public function destroy(Request $request, DataBaptis $baptis)
     {
+        $tahun = $baptis->created_at ? $baptis->created_at->year : now()->year;
         $baptis->delete();
-        return redirect()->route('baptis.index')->with('success', 'Data baptis berhasil dihapus.');
+        return redirect()->route('baptis.index', ['tahun' => $tahun])->with('success', 'Data baptis berhasil dihapus.');
     }
 }

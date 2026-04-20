@@ -84,6 +84,9 @@ const navItems = [
                         </button>
                     </template>
                     <template #content>
+                        <DropdownLink :href="route('account.settings')">
+                            Pengaturan Akun
+                        </DropdownLink>
                         <DropdownLink :href="route('logout')" method="post" as="button">
                             Keluar
                         </DropdownLink>
