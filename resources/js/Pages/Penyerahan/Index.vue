@@ -1,10 +1,11 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Pagination from '@/Components/Pagination.vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 
 const props = defineProps({
-    data: Array,
+    data: Object,
     tahun: Number,
     pengaturan: Object,
 });
@@ -69,10 +70,10 @@ function hapus(id) {
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <tr v-if="data.length === 0">
+                        <tr v-if="data.data.length === 0">
                             <td colspan="7" class="px-4 py-8 text-center text-gray-400">Belum ada data untuk tahun {{ tahun }}</td>
                         </tr>
-                        <tr v-for="item in data" :key="item.id" class="hover:bg-gray-50">
+                        <tr v-for="item in data.data" :key="item.id" class="hover:bg-gray-50">
                             <td class="px-4 py-3">{{ item.nomor_penyerahan }}</td>
                             <td class="px-4 py-3 font-medium">{{ item.nama_anak }}</td>
                             <td class="px-4 py-3">{{ item.tempat_lahir }}</td>
@@ -89,6 +90,7 @@ function hapus(id) {
                     </tbody>
                 </table>
             </div>
+            <Pagination :links="data.links" />
         </div>
     </AuthenticatedLayout>
 </template>

@@ -16,7 +16,8 @@ class DataPenyerahanAnakController extends Controller
 
         $data = DataPenyerahanAnak::whereYear('created_at', $tahun)
             ->orderBy('id')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return Inertia::render('Penyerahan/Index', [
             'data' => $data,

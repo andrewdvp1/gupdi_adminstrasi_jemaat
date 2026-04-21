@@ -16,7 +16,8 @@ class DataBaptisController extends Controller
 
         $data = DataBaptis::whereYear('created_at', $tahun)
             ->orderBy('nomor_urut')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return Inertia::render('Baptis/Index', [
             'data' => $data,

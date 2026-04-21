@@ -16,7 +16,8 @@ class DataPernikahanController extends Controller
 
         $data = DataPernikahan::whereYear('created_at', $tahun)
             ->orderBy('id')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return Inertia::render('Pernikahan/Index', [
             'data' => $data,
