@@ -13,16 +13,27 @@ class DataBaptisController extends Controller
     {
         $pengaturan = Pengaturan::first();
         $tahun = $request->get('tahun', $pengaturan?->tahun_baptis ?? now()->year);
+        $search = $request->get('search', '');
 
-        $data = DataBaptis::whereYear('created_at', $tahun)
-            ->orderBy('nomor_urut')
-            ->paginate(15)
-            ->withQueryString();
+        $query = DataBaptis::whereYear('created_at', $tahun);
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_lengkap', 'like', "%{$search}%")
+                  ->orWhere('nama_baptis',  'like', "%{$search}%")
+                  ->orWhere('nomor_baptis', 'like', "%{$search}%")
+                  ->orWhere('nama_ayah',    'like', "%{$search}%")
+                  ->orWhere('nama_ibu',     'like', "%{$search}%");
+            });
+        }
+
+        $data = $query->orderBy('nomor_urut')->paginate(15)->withQueryString();
 
         return Inertia::render('Baptis/Index', [
             'data' => $data,
             'tahun' => (int) $tahun,
             'pengaturan' => $pengaturan,
+            'filters' => ['search' => $search, 'tahun' => (int) $tahun],
         ]);
     }
 

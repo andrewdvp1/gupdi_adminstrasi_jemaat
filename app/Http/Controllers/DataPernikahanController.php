@@ -13,9 +13,20 @@ class DataPernikahanController extends Controller
     {
         $pengaturan = Pengaturan::first();
         $tahun = $request->get('tahun', $pengaturan?->tahun_pernikahan ?? now()->year);
+        $search = $request->get('search', '');
 
-        $data = DataPernikahan::whereYear('created_at', $tahun)
-            ->orderBy('id')
+        $query = DataPernikahan::whereYear('created_at', $tahun);
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_pria',   'like', "%{$search}%")
+                  ->orWhere('nama_wanita', 'like', "%{$search}%")
+                  ->orWhere('nomor_surat', 'like', "%{$search}%")
+                  ->orWhere('gereja',      'like', "%{$search}%");
+            });
+        }
+
+        $data = $query->orderBy('id')
             ->paginate(15)
             ->withQueryString();
 
@@ -23,6 +34,7 @@ class DataPernikahanController extends Controller
             'data' => $data,
             'tahun' => (int) $tahun,
             'pengaturan' => $pengaturan,
+            'filters' => ['search' => $search, 'tahun' => (int) $tahun],
         ]);
     }
 

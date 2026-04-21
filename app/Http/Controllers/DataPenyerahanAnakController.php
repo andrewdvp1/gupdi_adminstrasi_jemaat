@@ -13,16 +13,26 @@ class DataPenyerahanAnakController extends Controller
     {
         $pengaturan = Pengaturan::first();
         $tahun = $request->get('tahun', $pengaturan?->tahun_penyerahan ?? now()->year);
+        $search = $request->get('search', '');
 
-        $data = DataPenyerahanAnak::whereYear('created_at', $tahun)
-            ->orderBy('id')
-            ->paginate(15)
-            ->withQueryString();
+        $query = DataPenyerahanAnak::whereYear('created_at', $tahun);
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_anak', 'like', "%{$search}%")
+                  ->orWhere('nomor_penyerahan', 'like', "%{$search}%")
+                  ->orWhere('nama_ayah', 'like', "%{$search}%")
+                  ->orWhere('nama_ibu', 'like', "%{$search}%");
+            });
+        }
+
+        $data = $query->orderBy('id')->paginate(15)->withQueryString();
 
         return Inertia::render('Penyerahan/Index', [
             'data' => $data,
             'tahun' => (int) $tahun,
             'pengaturan' => $pengaturan,
+            'filters' => ['search' => $search, 'tahun' => (int) $tahun],
         ]);
     }
 

@@ -60,6 +60,7 @@ class ExportController extends Controller
         };
 
         return Pdf::loadView($view, ['data' => $data, 'tahun' => $tahun])
+            ->setPaper('a4', 'landscape')
             ->download($filename);
     }
 }

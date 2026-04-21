@@ -5,8 +5,12 @@ namespace App\Exports;
 use App\Models\DataPenyerahanAnak;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithTitle;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class PenyerahanExport implements FromCollection, WithHeadings
+class PenyerahanExport implements FromCollection, WithHeadings, WithStyles, WithColumnWidths, WithTitle
 {
     public function __construct(private int $tahun) {}
 
@@ -22,6 +26,33 @@ class PenyerahanExport implements FromCollection, WithHeadings
         return [
             'No. Penyerahan', 'Nama Anak', 'Tempat Lahir',
             'Tanggal Lahir', 'Nama Ayah', 'Nama Ibu', 'Alamat',
+        ];
+    }
+
+    public function title(): string
+    {
+        return 'Data Penyerahan Anak';
+    }
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 15, 'B' => 25, 'C' => 18,
+            'D' => 15, 'E' => 22, 'F' => 22, 'G' => 35,
+        ];
+    }
+
+    public function styles(Worksheet $sheet): array
+    {
+        return [
+            1 => [
+                'font'    => ['bold' => true, 'color' => ['argb' => 'FFFFFFFF']],
+                'fill'    => ['fillType' => 'solid', 'startColor' => ['argb' => 'FF4A7C59']],
+                'borders' => ['allBorders' => ['borderStyle' => 'thin']],
+            ],
+            'G' => [
+                'alignment' => ['wrapText' => true],
+            ],
         ];
     }
 }

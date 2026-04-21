@@ -8,13 +8,26 @@ const props = defineProps({
     data: Object,
     tahun: Number,
     pengaturan: Object,
+    filters: Object,
 });
 
 const page = usePage();
 const tahunFilter = ref(props.tahun);
+const searchKeyword = ref(props.filters?.search ?? '');
+let debounceTimer = null;
+
+function onSearch() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        router.get(route('baptis.index'), {
+            tahun: tahunFilter.value,
+            search: searchKeyword.value,
+        }, { preserveState: true, replace: true });
+    }, 300);
+}
 
 function filterTahun() {
-    router.get(route('baptis.index'), { tahun: tahunFilter.value }, { preserveState: true });
+    router.get(route('baptis.index'), { tahun: tahunFilter.value, search: searchKeyword.value }, { preserveState: true });
 }
 
 const exportExcelUrl = computed(() => `/export/baptis/excel?tahun=${tahunFilter.value}`);
@@ -44,6 +57,13 @@ function hapus(id) {
                         v-model="tahunFilter"
                         @change="filterTahun"
                         class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm w-24 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                    <input
+                        type="text"
+                        v-model="searchKeyword"
+                        @input="onSearch"
+                        placeholder="Cari nama, nomor baptis..."
+                        class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm w-56 focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
                 <Link :href="route('baptis.create')" class="bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
@@ -80,7 +100,10 @@ function hapus(id) {
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         <tr v-if="data.data.length === 0">
-                            <td colspan="9" class="px-4 py-8 text-center text-gray-400">Belum ada data untuk tahun {{ tahun }}</td>
+                            <td colspan="9" class="px-4 py-8 text-center text-gray-400">
+                                <span v-if="filters?.search">Tidak ada data yang cocok dengan pencarian.</span>
+                                <span v-else>Belum ada data untuk tahun {{ tahun }}</span>
+                            </td>
                         </tr>
                         <tr v-for="item in data.data" :key="item.id" class="hover:bg-gray-50">
                             <td class="px-4 py-3">{{ item.nomor_urut }}</td>
