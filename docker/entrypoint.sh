@@ -3,10 +3,6 @@ set -e
 
 cd /var/www/html
 
-# Clear any cached config to ensure env vars are read fresh
-php artisan config:clear
-php artisan cache:clear
-
 # Run migrations
 php artisan migrate --force
 
