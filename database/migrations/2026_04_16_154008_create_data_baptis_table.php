@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('data_baptis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('nomor_urut');
+            $table->unsignedInteger('nomor_urut')->nullable();
             $table->string('nomor_baptis', 50);
             $table->string('nama_lengkap', 100);
             $table->string('nama_baptis', 100);
