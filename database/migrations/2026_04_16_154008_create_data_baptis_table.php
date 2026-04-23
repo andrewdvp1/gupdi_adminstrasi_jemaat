@@ -13,12 +13,12 @@ return new class extends Migration
             $table->unsignedInteger('nomor_urut')->nullable();
             $table->string('nomor_baptis', 50);
             $table->string('nama_lengkap', 100);
-            $table->string('nama_baptis', 100);
-            $table->string('tempat_lahir', 100);
-            $table->date('tanggal_lahir');
-            $table->string('nama_ayah', 100);
-            $table->string('nama_ibu', 100);
-            $table->text('alamat');
+            $table->string('nama_baptis', 100)->nullable();
+            $table->string('tempat_lahir', 100)->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('nama_ayah', 100)->nullable();
+            $table->string('nama_ibu', 100)->nullable();
+            $table->text('alamat')->nullable();
             $table->timestamp('created_at')->nullable();
         });
     }
