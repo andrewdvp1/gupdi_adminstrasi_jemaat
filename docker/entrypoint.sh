@@ -3,11 +3,6 @@ set -e
 
 cd /var/www/html
 
-# Generate app key if not set
-if [ -z "$APP_KEY" ]; then
-    php artisan key:generate --force
-fi
-
 # Cache config, routes, views
 php artisan config:cache
 php artisan route:cache
