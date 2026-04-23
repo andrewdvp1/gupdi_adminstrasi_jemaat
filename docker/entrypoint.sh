@@ -3,10 +3,9 @@ set -e
 
 cd /var/www/html
 
-# Cache config, routes, views
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+# Clear any cached config to ensure env vars are read fresh
+php artisan config:clear
+php artisan cache:clear
 
 # Run migrations
 php artisan migrate --force
