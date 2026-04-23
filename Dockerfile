@@ -50,6 +50,9 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interactio
 # Copy application files
 COPY . .
 
+# Remove .env if it was accidentally copied, force use of environment variables
+RUN rm -f .env && touch .env
+
 # Copy built frontend assets from stage 1
 COPY --from=frontend /app/public/build ./public/build
 
