@@ -103,7 +103,7 @@
                         <td>{{ $row->nama_lengkap }}</td>
                         <td>{{ $row->nama_baptis }}</td>
                         <td>{{ $row->tempat_lahir }}</td>
-                        <td>{{ $row->tanggal_lahir }}</td>
+                        <td>{{ $row->tanggal_lahir ? \Carbon\Carbon::parse($row->tanggal_lahir)->format('d/m/Y') : '-' }}</td>
                         <td>{{ $row->nama_ayah }}</td>
                         <td>{{ $row->nama_ibu }}</td>
                         <td>{{ $row->alamat }}</td>

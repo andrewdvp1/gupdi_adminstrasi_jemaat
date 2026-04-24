@@ -96,7 +96,7 @@
                     <tr>
                         <td>{{ $row->nomor_surat }}</td>
                         <td>{{ $row->hari }}</td>
-                        <td>{{ $row->tanggal }}</td>
+                        <td>{{ $row->tanggal ? \Carbon\Carbon::parse($row->tanggal)->format('d/m/Y') : '-' }}</td>
                         <td>{{ $row->jam }}</td>
                         <td>{{ $row->gereja }}</td>
                         <td>{{ $row->nama_pria }}</td>
