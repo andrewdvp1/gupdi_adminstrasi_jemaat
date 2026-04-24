@@ -33,6 +33,15 @@ function filterTahun() {
 const exportExcelUrl = computed(() => `/export/penyerahan/excel?tahun=${tahunFilter.value}`);
 const exportPdfUrl = computed(() => `/export/penyerahan/pdf?tahun=${tahunFilter.value}`);
 
+function formatTanggal(val) {
+    if (!val) return '-';
+    const d = new Date(val);
+    const dd = String(d.getUTCDate()).padStart(2, '0');
+    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const yy = String(d.getUTCFullYear());
+    return dd + '/' + mm + '/' + yy;
+}
+
 function hapus(id) {
     if (confirm('Yakin ingin menghapus data ini?')) {
         router.delete(route('penyerahan.destroy', id));
@@ -100,7 +109,7 @@ function hapus(id) {
                             <td class="px-4 py-3">{{ item.nomor_penyerahan }}</td>
                             <td class="px-4 py-3 font-medium">{{ item.nama_anak }}</td>
                             <td class="px-4 py-3">{{ item.tempat_lahir }}</td>
-                            <td class="px-4 py-3">{{ item.tanggal_lahir }}</td>
+                            <td class="px-4 py-3">{{ formatTanggal(item.tanggal_lahir) }}</td>
                             <td class="px-4 py-3">{{ item.nama_ayah }}</td>
                             <td class="px-4 py-3">{{ item.nama_ibu }}</td>
                             <td class="px-4 py-3 text-center">

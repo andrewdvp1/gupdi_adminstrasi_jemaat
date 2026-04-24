@@ -19,7 +19,11 @@ class PenyerahanExport implements FromCollection, WithHeadings, WithStyles, With
         return DataPenyerahanAnak::where('nomor_penyerahan', 'like', '%/' . $this->tahun)
             ->orderBy('id')
             ->get(['nomor_penyerahan', 'nama_anak', 'tempat_lahir',
-                   'tanggal_lahir', 'nama_ayah', 'nama_ibu', 'alamat']);
+                   'tanggal_lahir', 'nama_ayah', 'nama_ibu', 'alamat'])
+            ->map(function ($row) {
+                $row->tanggal_lahir = $row->tanggal_lahir ? $row->tanggal_lahir->format('d/m/Y') : '-';
+                return $row;
+            });
     }
 
     public function headings(): array
