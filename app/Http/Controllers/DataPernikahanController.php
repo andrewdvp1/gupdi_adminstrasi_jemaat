@@ -15,7 +15,7 @@ class DataPernikahanController extends Controller
         $tahun = $request->get('tahun', $pengaturan?->tahun_pernikahan ?? now()->year);
         $search = $request->get('search', '');
 
-        $query = DataPernikahan::whereYear('created_at', $tahun);
+        $query = DataPernikahan::where('nomor_surat', 'like', "%/{$tahun}");
 
         if ($search !== '') {
             $query->where(function ($q) use ($search) {

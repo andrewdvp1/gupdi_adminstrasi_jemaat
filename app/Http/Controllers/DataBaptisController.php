@@ -15,7 +15,7 @@ class DataBaptisController extends Controller
         $tahun = $request->get('tahun', $pengaturan?->tahun_baptis ?? now()->year);
         $search = $request->get('search', '');
 
-        $query = DataBaptis::whereYear('created_at', $tahun);
+        $query = DataBaptis::where('nomor_baptis', 'like', "%/{$tahun}");
 
         if ($search !== '') {
             $query->where(function ($q) use ($search) {

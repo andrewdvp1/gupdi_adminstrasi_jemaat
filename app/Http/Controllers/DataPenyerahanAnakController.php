@@ -15,7 +15,7 @@ class DataPenyerahanAnakController extends Controller
         $tahun = $request->get('tahun', $pengaturan?->tahun_penyerahan ?? now()->year);
         $search = $request->get('search', '');
 
-        $query = DataPenyerahanAnak::whereYear('created_at', $tahun);
+        $query = DataPenyerahanAnak::where('nomor_penyerahan', 'like', "%/{$tahun}");
 
         if ($search !== '') {
             $query->where(function ($q) use ($search) {
