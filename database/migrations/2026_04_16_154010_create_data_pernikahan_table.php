@@ -14,8 +14,8 @@ return new class extends Migration
             $table->string('hari', 20);
             $table->date('tanggal');
             $table->time('jam');
-            $table->string('gereja', 150);
-            $table->text('alamat_gereja');
+            $table->string('gereja', 150)->nullable();
+            $table->text('alamat_gereja')->nullable();
             $table->string('nama_pria', 100);
             $table->string('tempat_lahir_pria', 100);
             $table->date('tanggal_lahir_pria');
