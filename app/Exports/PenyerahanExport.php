@@ -16,7 +16,8 @@ class PenyerahanExport implements FromCollection, WithHeadings, WithStyles, With
 
     public function collection()
     {
-        return DataPenyerahanAnak::whereYear('created_at', $this->tahun)
+        return DataPenyerahanAnak::where('nomor_penyerahan', 'like', '%/' . $this->tahun)
+            ->orderBy('id')
             ->get(['nomor_penyerahan', 'nama_anak', 'tempat_lahir',
                    'tanggal_lahir', 'nama_ayah', 'nama_ibu', 'alamat']);
     }

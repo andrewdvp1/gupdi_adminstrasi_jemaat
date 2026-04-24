@@ -16,7 +16,8 @@ class BaptisExport implements FromCollection, WithHeadings, WithStyles, WithColu
 
     public function collection()
     {
-        return DataBaptis::whereYear('created_at', $this->tahun)
+        return DataBaptis::where('nomor_baptis', 'like', '%/' . $this->tahun)
+            ->orderBy('nomor_urut')
             ->get(['nomor_urut', 'nomor_baptis', 'nama_lengkap', 'nama_baptis',
                    'tempat_lahir', 'tanggal_lahir', 'nama_ayah', 'nama_ibu', 'alamat']);
     }

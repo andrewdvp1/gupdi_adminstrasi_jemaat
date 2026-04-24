@@ -16,7 +16,8 @@ class PernikahanExport implements FromCollection, WithHeadings, WithStyles, With
 
     public function collection()
     {
-        return DataPernikahan::whereYear('created_at', $this->tahun)
+        return DataPernikahan::where('nomor_surat', 'like', '%/' . $this->tahun)
+            ->orderBy('id')
             ->get(['nomor_surat', 'hari', 'tanggal', 'jam', 'gereja', 'nama_pria', 'nama_wanita']);
     }
 
