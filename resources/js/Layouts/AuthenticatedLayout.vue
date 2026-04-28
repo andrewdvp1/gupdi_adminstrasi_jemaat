@@ -26,7 +26,7 @@ const navItems = [
         >
             <!-- Logo area -->
             <div class="flex items-center gap-3 px-4 py-5 border-b border-blue-700">
-                <img src="/logo_gupdi2.png" alt="GUPDI" class="h-10 w-10 object-contain shrink-0" />
+                <img src="/gupdi_logo.png" alt="GUPDI" class="h-10 w-10 object-contain shrink-0" />
                 <div v-if="sidebarOpen" class="overflow-hidden">
                     <p class="font-bold text-sm leading-tight text-yellow-400">GUPDI</p>
                     <p class="text-xs text-blue-200 leading-tight">Pasar Legi, Surakarta</p>
